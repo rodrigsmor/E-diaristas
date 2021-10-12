@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
     SafeEnvironmentContainer,
-} from './SafeEnvironment.styled';
+} from './SafeEnvironment.style';
 
 import { Container } from '@mui/material'
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { 
     HeaderAppBar,
     HeaderLogo
-} from './Header.styles';
+} from './Header.style';
 import { Toolbar, Container } from '@mui/material';
 
 const Header: React.FC = () => {

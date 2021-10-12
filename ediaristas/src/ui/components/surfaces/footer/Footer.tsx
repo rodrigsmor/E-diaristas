@@ -5,7 +5,7 @@ import {
     FooterTitle,
     FooterStyled,
     FooterContainer
-} from './Footer.styles';
+} from './Footer.style';
 
 import { Typography, Box } from '@mui/material';
 
