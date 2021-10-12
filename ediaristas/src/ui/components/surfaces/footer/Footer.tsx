@@ -9,12 +9,11 @@ import {
 
 import { Typography, Box } from '@mui/material';
 
-
 const Footer = () => {
     return (
         <FooterStyled>
             <FooterContainer>
-                <Box sx={{ maxWidth: '200px' }}>
+                <Box sx={{ maxWidth: '400px' }}>
                     <FooterTitle>Quem Somos</FooterTitle>
                     <Typography variant={'body2'} sx={{ mt: 2 }}>
                         O e-diaristas te ajuda a encontrar um profissional perfeito para realizar a limpeza da sua casa. Garantimos os melhores profissionais com total segurança e praticidade! São milhares de clientes satisfeitos por todo o país.
