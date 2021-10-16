@@ -4,11 +4,14 @@ import br.com.treinaweb.ediaristas.models.Diarista;
 import br.com.treinaweb.ediaristas.repositories.DiaristaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/diaristas")
@@ -35,7 +38,11 @@ public class DiaristaController {
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrar(Diarista diarista) {
+    public String cadastrar(@Valid Diarista diarista, BindingResult result) {
+        if(result.hasErrors()) {
+            return "admin/diaristas/form";
+        }
+
         repository.save(diarista);
 
         return "redirect:/admin/diaristas";
@@ -51,7 +58,11 @@ public class DiaristaController {
     }
 
     @PostMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Diarista diarista) {
+    public String editar(@PathVariable Long id, @Valid Diarista diarista, BindingResult result) {
+        if (result.hasErrors()) {
+            return "admin/diaristas/form";
+        }
+
         repository.save(diarista);
 
         return "redirect:/admin/diaristas";
