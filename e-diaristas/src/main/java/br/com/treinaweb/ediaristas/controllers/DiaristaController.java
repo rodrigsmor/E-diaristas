@@ -3,9 +3,12 @@ package br.com.treinaweb.ediaristas.controllers;
 import br.com.treinaweb.ediaristas.models.Diarista;
 import br.com.treinaweb.ediaristas.repositories.DiaristaRepository;
 import br.com.treinaweb.ediaristas.services.FileService;
+import br.com.treinaweb.ediaristas.services.ViaCepService;
+import br.com.treinaweb.ediaristas.validators.CepValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +25,17 @@ public class DiaristaController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private ViaCepService viaCepService;
+
+    @Autowired
+    private CepValidator cepValidator;
+
+    @InitBinder("diarista")
+    private void initBinder(WebDataBinder binder) {
+        binder.addValidators(cepValidator);
+    }
 
     @GetMapping
     public ModelAndView listar() {
@@ -48,6 +62,12 @@ public class DiaristaController {
 
         var filename = fileService.salvar(imagem);
         diarista.setPhoto(filename);
+
+        var cep = diarista.getCep();
+        var endereco = viaCepService.BuscarEnderecoPorCep(cep);
+        var codigoIbge = endereco.getIbge();
+        diarista.setCodigoIbge(codigoIbge);
+
         repository.save(diarista);
 
         return "redirect:/admin/diaristas";
@@ -76,6 +96,11 @@ public class DiaristaController {
             var filename = fileService.salvar(imagem);
             diarista.setPhoto(filename);
         }
+
+        var cep = diarista.getCep();
+        var endereco = viaCepService.BuscarEnderecoPorCep(cep);
+        var codigoIbge = endereco.getIbge();
+        diarista.setCodigoIbge(codigoIbge);
 
         repository.save(diarista);
 
