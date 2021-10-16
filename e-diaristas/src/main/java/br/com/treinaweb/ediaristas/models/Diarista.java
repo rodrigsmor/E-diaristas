@@ -1,7 +1,9 @@
 package br.com.treinaweb.ediaristas.models;
 
-import lombok.*;
-import org.springframework.lang.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
