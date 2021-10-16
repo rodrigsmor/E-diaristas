@@ -4,7 +4,7 @@
         <main>
             <h1>Cadastro de Diaristas</h1>
 
-            <form method="POST" th:object="${diarista}">
+            <form method="POST" th:object="${diarista}" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label class="form-label" for="nomeCompleto">Nome Completo</label>
@@ -130,6 +130,11 @@
                                 th:text="${erro}"
                         ></li>
                     </ul>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="imagem">Foto</label>
+                    <input class="form-control" type="file" id="imagem" name="imagem">
                 </div>
 
                 <button class="btn btn-success" type="submit">Salvar</button>

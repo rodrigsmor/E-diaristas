@@ -123,4 +123,6 @@ public class Diarista {
     @NotEmpty
     @Column(nullable = false)
     private String codigoIbge;
+
+    private String photo;
 }

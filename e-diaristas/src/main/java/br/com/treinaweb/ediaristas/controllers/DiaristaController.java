@@ -2,16 +2,16 @@ package br.com.treinaweb.ediaristas.controllers;
 
 import br.com.treinaweb.ediaristas.models.Diarista;
 import br.com.treinaweb.ediaristas.repositories.DiaristaRepository;
+import br.com.treinaweb.ediaristas.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin/diaristas")
@@ -19,6 +19,9 @@ public class DiaristaController {
 
     @Autowired
     private DiaristaRepository repository;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping
     public ModelAndView listar() {
@@ -38,11 +41,13 @@ public class DiaristaController {
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrar(@Valid Diarista diarista, BindingResult result) {
+    public String cadastrar(@RequestParam MultipartFile imagem, @Valid Diarista diarista, BindingResult result) throws IOException {
         if(result.hasErrors()) {
             return "admin/diaristas/form";
         }
 
+        var filename = fileService.salvar(imagem);
+        diarista.setPhoto(filename);
         repository.save(diarista);
 
         return "redirect:/admin/diaristas";
@@ -58,9 +63,18 @@ public class DiaristaController {
     }
 
     @PostMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, @Valid Diarista diarista, BindingResult result) {
+    public String editar(@RequestParam MultipartFile imagem, @PathVariable Long id, @Valid Diarista diarista, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             return "admin/diaristas/form";
+        }
+
+        var diaristaAtual = repository.getById(id);
+
+        if(imagem.isEmpty()) {
+            diarista.setPhoto(diaristaAtual.getPhoto());
+        } else {
+            var filename = fileService.salvar(imagem);
+            diarista.setPhoto(filename);
         }
 
         repository.save(diarista);
