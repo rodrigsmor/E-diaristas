@@ -1,4 +1,4 @@
-package br.com.treinaweb.ediaristas.dtos;
+package br.com.treinaweb.ediaristas.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

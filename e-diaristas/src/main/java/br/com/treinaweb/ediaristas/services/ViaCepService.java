@@ -1,6 +1,6 @@
 package br.com.treinaweb.ediaristas.services;
 
-import br.com.treinaweb.ediaristas.dtos.ViaCepResponse;
+import br.com.treinaweb.ediaristas.dto.ViaCepResponse;
 import br.com.treinaweb.ediaristas.exceptions.CepInvalidoException;
 import br.com.treinaweb.ediaristas.exceptions.CepNaoEncontradoException;
 import org.springframework.http.ResponseEntity;
