@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@emotion/react';
 import { ScrollView } from 'react-native';
 import PageTitle from 'ui/components/data-display/PageTitle/PageTitle';
@@ -13,6 +13,7 @@ import {
     ResponseContainer
 } from '@styles/pages/encontrar-diarista.styled';
 import useIndex from 'data/hooks/pages/useIndex.page';
+import useEncontrarDiaristas from 'data/hooks/pages/useEncontrarDiaristas.page.mobile';
 
 const EncontrarDiaristas: React.FC = () => {
     const { colors } = useTheme();
@@ -26,7 +27,15 @@ const EncontrarDiaristas: React.FC = () => {
         buscaFeita,
         carregando,
         diaristasRestantes,
-    } = useIndex();
+    } = useIndex(),
+        { cepAutomatico } = useEncontrarDiaristas();
+
+    useEffect(() => {
+        if(cepAutomatico && !cep) {
+            setCep(cepAutomatico);
+            buscarProfissionais(cepAutomatico);
+        }
+    }, [cepAutomatico]);
 
     return (
         <ScrollView>
